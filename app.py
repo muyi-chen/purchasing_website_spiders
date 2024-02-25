@@ -10,21 +10,24 @@ def read_config(config_file='config.ini'):
 
 
 def main():
-    config = read_config()
+    try:
+        config = read_config()
 
-    org_name = config.get('org_name')
-    tender_name = config.get('tender_name')
-    start_date = config.get('start_date')
-    end_date = config.get('end_date')
-    execution_interval = config.getint('execution_interval')
+        org_name = config.get('org_name')
+        tender_name = config.get('tender_name')
+        start_date = config.get('start_date')
+        end_date = config.get('end_date')
+        execution_interval = config.getint('execution_interval')
 
-    while True:
-        client = Client(org_name, tender_name, start_date, end_date)
-        client.search()
+        while True:
+            client = Client(org_name, tender_name, start_date, end_date)
+            client.search()
 
-        print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已完成搜尋標案資訊")
-        
-        time.sleep(execution_interval * 3600)
+            print(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] 已完成搜尋標案資訊")
+            
+            time.sleep(execution_interval * 3600)
+    except Exception as e:
+        print(f"發生錯誤: {e}")
 
 
 if __name__ == '__main__':
